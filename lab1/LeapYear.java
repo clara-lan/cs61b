@@ -1,3 +1,5 @@
+import java.security.KeyStore;
+
 /** Class that determines whether or not a year is a leap year.
  *  @author YOUR NAME HERE
  */
@@ -7,12 +9,26 @@ public class LeapYear {
      *  @param  year to be analyzed
      */
     private static void checkLeapYear(int year) {
-        if (isLeapYear(year)) {
+        if (isLeapYear(year) == true) {
             System.out.printf("%d is a leap year.\n", year);
         } else {
             System.out.printf("%d is not a leap year.\n", year);
         }
     }
+
+    /** Check whether the input year is leap year*/
+    public static boolean isLeapYear(int year) {
+        boolean leapYear;
+        if (year % 400 == 0){
+            leapYear = true;
+        } else if (year % 4 ==0 & year % 100 != 0){
+            leapYear = true;
+        }else{
+            leapYear = false;
+        }
+        return leapYear;
+    }
+
 
     /** Must be provided an integer as a command line argument ARGS. */
     public static void main(String[] args) {
