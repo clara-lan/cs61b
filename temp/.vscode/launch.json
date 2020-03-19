@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LeapYear",
+            "request": "launch",
+            "mainClass": "LeapYear",
+            "projectName": "temp_b2b8045b"
+        }
+    ]
+}
