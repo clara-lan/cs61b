@@ -61,7 +61,7 @@ public class Government {
 
 	public class Explorer {
 		public void doStuff(Government a, Government b) {
-			Government favorite = Government.greaterTreasury(a, b);
+			Government favorite = new Government().greaterTreasury(a, b);
 			System.out.println("The best government has treasury " + favorite.treasury);			
 		}
 	}
