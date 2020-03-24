@@ -60,7 +60,7 @@ public class TestBodyConstructor {
                mass = 5.0;
 
         String imgFileName = "jupiter.gif";
-
+        
         Body b = new Body(xxPos, yyPos, xxVel, yyVel, mass, imgFileName);
 
         checkEquals(xxPos, b.xxPos, "xxPos");
