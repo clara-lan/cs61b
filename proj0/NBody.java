@@ -56,16 +56,38 @@ public class NBody{
   // read from command line input, no matter the name of paramas(either args/input works )
   public static void main(String[] input){
     double T = Double.parseDouble(input[0]);
-    System.out.println(T);
+    // System.out.println(T);
     double dt = Double.parseDouble(input[1]);
-    System.out.println(dt);
+    // System.out.println(dt);
     String filename = input[2];
-    System.out.println(filename);
+    // System.out.println(filename);
     //use classname.method to call a static method
     Body[] bodies = NBody.readBodies(filename);
     //java can not print object
-    System.out.println(bodies);
+    // System.out.println(bodies);
     double radius = NBody.readRadius(filename);
-    System.out.println(radius);
+    // System.out.println(radius);
+   
+    String imageToDraw = "images/starfield.jpg";
+    StdDraw.enableDoubleBuffering();
+    StdDraw.setScale(-100, 100);
+    StdDraw.clear();
+    StdDraw.picture(0, 75, imageToDraw);
+		StdDraw.picture(-75, -75, imageToDraw);
+    StdDraw.picture(75, -75, imageToDraw);
+    StdDraw.show();
+    //2000 miliseconds = 2seconds;wait for 2seconds before draw bodies
+    StdDraw.pause(2000);
+    //radius = universe radius, locate bodies according to ratio of unvierse and bodies(bg and bodies);
+    StdDraw.setScale(-radius, radius);
+    int i = 0;
+    while (i < bodies.length){
+      bodies[i].draw();
+      i += 1;
+    }
+    //all drawing takes place on the offscreen canvas. The offscreen canvas is not displayed.
+    StdDraw.enableDoubleBuffering();
+    double time = 0.0;
+    
   }
 }
