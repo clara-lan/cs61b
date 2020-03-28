@@ -82,7 +82,16 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if(B == null){
+            return A;
+        }
+        if(A.rest == null) {
+            A.rest = B;
+            return A;
+        }
+        /* if A.rest != null, find out the next A.rest, until reaches A.rest == null*/
+        A.rest = dcatenate(A.rest, B);
+        return A;
     }
 
     /**
@@ -91,10 +100,29 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if(B == null)
+            return A;
+        IntList newL = copy(A);
+        if (newL.rest == null){
+            newL.rest = B;
+            return newL;
+        }
+        newL.rest = catenate(newL.rest, B);
+        return newL;
+
+// ONE LINE SOLUTION:
+//        return dcatenate(copy(A), copy(B));
+
     }
 
-
+    public static IntList copy(IntList A){
+        /*need to be static because it's going to be used in a static func(static IntList catenat)*/
+        if(A == null)
+            return null;
+        IntList newA = new IntList(A.first, null);
+        newA.rest = copy(A.rest);
+        return newA;
+    }
 
 
 

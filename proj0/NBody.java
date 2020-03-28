@@ -75,7 +75,8 @@ public class NBody{
     StdDraw.picture(0, 75, imageToDraw);
 		StdDraw.picture(-75, -75, imageToDraw);
     StdDraw.picture(75, -75, imageToDraw);
-    StdDraw.show();
+    // with or without show, the bg and bodies both display
+    // StdDraw.show();
     //2000 miliseconds = 2seconds;wait for 2seconds before draw bodies
     StdDraw.pause(2000);
     //radius = universe radius, locate bodies according to ratio of unvierse and bodies(bg and bodies);
@@ -86,8 +87,34 @@ public class NBody{
       i += 1;
     }
     //all drawing takes place on the offscreen canvas. The offscreen canvas is not displayed.
-    StdDraw.enableDoubleBuffering();
-    double time = 0.0;
-    
+    // StdDraw.enableDoubleBuffering();
+    double cnt = 0.0;
+    double[] xforces = new double[bodies.length];
+    double[] yforces = new double[bodies.length];
+    while (cnt <= T){
+      for(int j=0; j< bodies.length; j++){
+        xforces[j] = bodies[j].calcNetForceExertedByX(bodies);
+        yforces[j] = bodies[j].calcNetForceExertedByY(bodies);
+      }
+      for(int ind = 0; ind < bodies.length; ind++){
+        bodies[ind].update(dt, xforces[ind], yforces[ind]);
+      }
+      StdDraw.enableDoubleBuffering();
+      StdDraw.clear();
+      StdDraw.picture(0, 75, imageToDraw);
+      StdDraw.picture(-75, -75, imageToDraw);
+      StdDraw.picture(75, -75, imageToDraw);
+      StdDraw.pause(10);
+      StdDraw.setScale(-radius, radius);
+      for(int k = 0; k < bodies.length; k++){
+        bodies[k].draw();
+      }
+      StdDraw.show();
+      cnt += dt;
+      //break the while loop when cnt > T
+      System.out.println("now is :"+cnt);
+      System.out.println(T);
+      System.out.println(dt);
+    }
   }
 }
