@@ -2,6 +2,7 @@ package huglife;
 
 import creatures.*;
 
+
 /**
  * World facing class for HugLife simulator.
  *

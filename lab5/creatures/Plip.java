@@ -6,9 +6,10 @@ import huglife.Action;
 import huglife.Occupant;
 
 import java.awt.Color;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static huglife.HugLifeUtils.randomEntry;
 
 /**
  * An implementation of a motile pacifist photosynthesizer.
@@ -57,9 +58,14 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        // convert double to int
+        g = 96 * (int)energy + 63;
+        b = 76;
+        // need to specify (r,g,b)
         return color(r, g, b);
     }
+
 
     /**
      * Do nothing with C, Plips are pacifists.
@@ -75,6 +81,10 @@ public class Plip extends Creature {
      */
     public void move() {
         // TODO
+        energy -= 0.15;
+        if (energy < 0){
+            energy = 0;
+        }
     }
 
 
@@ -83,6 +93,10 @@ public class Plip extends Creature {
      */
     public void stay() {
         // TODO
+        energy += 0.2;
+       if (energy > 2){
+            energy = 2;
+        }
     }
 
     /**
@@ -91,7 +105,11 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        Plip babyP = new Plip();
+        // copy energy
+        energy /= 2;
+        babyP.energy = energy;
+        return babyP;
     }
 
     /**
@@ -107,24 +125,40 @@ public class Plip extends Creature {
      * scoop on how Actions work. See SampleCreature.chooseAction()
      * for an example to follow.
      */
+    // Map<Key, Value>, map name:neighbors
     public Action chooseAction(Map<Direction, Occupant> neighbors) {
         // Rule 1
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
         boolean anyClorus = false;
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
-        // for () {...}
-
-        if (false) { // FIXME
-            // TODO
+        // key:mapname.keySet() == (python:) for key in mapname.keys()
+        for(Direction key:neighbors.keySet()){
+            // based on Direction, keys are Direction object
+            if(neighbors.get(key).name().equals("empty")){
+                emptyNeighbors.add(key);
+            }else if (neighbors.get(key).name().equals("clorus")){
+                // if any neighbor exits, change to true
+                anyClorus = true;
+            }
         }
 
+
+
+        if(emptyNeighbors.size() == 0){
+            return new Action(Action.ActionType.STAY);
+        }
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
-
-        // Rule 3
-
-        // Rule 4
-        return new Action(Action.ActionType.STAY);
+        else if (energy >= 1) {
+            return new Action(Action.ActionType.REPLICATE, randomEntry(emptyNeighbors));
+        }     // Rule 3
+        else if (anyClorus && Math.random() >= 0.5){
+            return new Action(Action.ActionType.MOVE, randomEntry(emptyNeighbors));
+        }
+        else{
+            // Rule 4
+            return new Action(Action.ActionType.STAY);
+        }
     }
 }
