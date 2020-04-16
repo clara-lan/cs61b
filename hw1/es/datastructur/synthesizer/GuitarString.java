@@ -1,5 +1,7 @@
 package es.datastructur.synthesizer;
 
+import java.util.Arrays;
+
 //Note: This file will not compile until you complete task 1 (BoundedQueue).
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final
@@ -16,6 +18,11 @@ public class GuitarString {
         //       cast the result of this division operation into an int. For
         //       better accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
+        int capacity = SR / (int) Math.round(frequency); // Math.round will return long, generate a new long val(1), then cast into int
+        Double[] array = new Double[capacity];
+        Arrays.fill(array, (double) 0); // fill the array with double val 0;
+        buffer = new ArrayRingBuffer<>(array); // pass the array(filled with 0) to buffer
+
     }
 
 
@@ -27,6 +34,12 @@ public class GuitarString {
         //
         //       Make sure that your random numbers are different from each
         //       other.
+
+        for(int i=0; i < buffer.capacity(); i++){
+            buffer.dequeue();
+            double r = Math.random() - 0.5;
+            buffer.enqueue(r);
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of
@@ -35,13 +48,16 @@ public class GuitarString {
     public void tic() {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
-        //       Do not call StdAudio.play().
+        //       Do not call StdAudio.play()
+       double oldFront = buffer.dequeue();
+       double newDouble = (oldFront + buffer.peek()) * 0.5 * DECAY;
+       buffer.enqueue(newDouble);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        return 0;
+        return buffer.peek();
     }
 }
     // TODO: Remove all comments that say TODO when you're done.
