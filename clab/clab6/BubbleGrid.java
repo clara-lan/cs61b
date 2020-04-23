@@ -14,6 +14,23 @@ public class BubbleGrid {
      * and have no side-effects to grid. */
     public int[] popBubbles(int[][] darts) {
         // TODO
+        int[] res = new int[darts.length]; //results would be same len as the darts
+        int i = grid.length - 1 ;
+        int j = grid[0].length -1;
+        int index = 0;
+
+        for(int[] pos:darts){
+            if (i == pos[0] && j == pos[1]){
+                if(grid[i][j] != 0){
+
+                }
+                res[index] = 0;
+                index += 1;
+
+            }
+            i -= 1;
+            j -= 1;
+        }
         return null;
     }
 }
