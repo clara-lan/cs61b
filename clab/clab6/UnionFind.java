@@ -35,9 +35,8 @@ public class UnionFind {
 
         // validate v1
         validate(v1);
-
         int set_size = 1;
-        for( int i:parent ){
+        for( int i=0; i < parent.length; i++ ){
             if(parent[i] == parent[v1] && i != v1){
                 set_size += 1;
             }
@@ -52,8 +51,9 @@ public class UnionFind {
         validate(v1);
         if(parent[v1] == v1){
             return -sizeOf(v1);
+        }else{
+            return parent[v1];
         }
-        return parent[v1];
     }
 
     /* Returns true if nodes v1 and v2 are connected. */
@@ -61,7 +61,7 @@ public class UnionFind {
         // TODO
         validate(v1);
         validate(v2);
-        return find(v1) == find(v2);
+        return parent[v1] == parent[v2];
     }
 
     /* Connects two elements v1 and v2 together. v1 and v2 can be any valid
@@ -73,15 +73,25 @@ public class UnionFind {
         // TODO
         validate(v1);
         validate(v2);
+        int temp;
         int root1 = parent[v1];
-        int set1 = sizeOf(v1);
         int root2 = parent[v2];
-        int set2 = sizeOf(v2);
-        if (!connected(v1, v2)) {
-            if (set1 > set2) {
-                parent[root1] = root2;
+        if(sizeOf(v1) <= sizeOf(v2)){
+            // change v1'root to v2'root
+            temp = root2;
+            // change parent of every node within union
+            for(int i=0; i < parent.length; i++){
+                if(parent[i] == root1){
+                    parent[i] = temp;
+                }
             }
-            parent[root2] = root1;
+        }else{
+            temp = root1;
+            for(int i=0; i < parent.length; i++){
+                if(parent[i] == root2){
+                    parent[i] = temp;
+                }
+            }
         }
     }
 
@@ -90,15 +100,8 @@ public class UnionFind {
     public int find(int vertex) throws Exception{
         // TODO
         validate(vertex);
-        // r : root of current vertex
-        int r = vertex;
-        int temp;
-        while(r !=  parent[r]){
-            temp = parent[vertex]; //copy val/old_parent to temp
-            parent[vertex] = r; // assign root to val box, which is the new_parent/root for this index
-            vertex = temp; // assign old_parent to vertex and go to find grandparent
-        }
-        return r;
+        return parent[vertex];// use path-compression, root has been updated everytime call union(a, b)
+
     }
 
 }
