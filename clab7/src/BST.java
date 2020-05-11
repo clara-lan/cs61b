@@ -8,8 +8,7 @@ public class BST<Key extends Comparable<Key>> {
     /**
      * Initializes an empty BST.
      */
-    public BST() {
-    }
+    public BST() { }
 
     /**
      * Returns the number of keys in this BST.
@@ -246,4 +245,19 @@ public class BST<Key extends Comparable<Key>> {
     private boolean isEmpty() {
         return size() == 0;
     }
+
+    // depth of the node(from helper func) / size, return avg depth
+    public double avgDepth(){
+        return (double) avgDepth(root, 0) / size();
+    }
+
+    //helper private func, calculate depth of a certain node
+    private int avgDepth(Node T, int depth){
+        if(T == null){
+            return 0;
+        }
+        return depth + avgDepth(T.right, depth+1) + avgDepth(T.left, depth+1);
+    }
+
+
 }
