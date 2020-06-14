@@ -49,7 +49,7 @@ public class TestMyHashMapExtra {
         assertTrue(q.containsKey("f"));
     }
 
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestMyHashMapExtra.class);
-    }
+//    public static void main(String[] args) {
+//        jh61b.junit.TestRunner.runTests(TestMyHashMapExtra.class);
+//    }
 }

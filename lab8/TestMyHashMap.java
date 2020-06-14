@@ -140,7 +140,7 @@ public class TestMyHashMap {
         assertEquals(studentIDs.get("evil alan"), studentIDs.get("alan"));
     }
 
-    public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
-    }
+//    public static void main(String[] args) {
+//        jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
+//    }
 }
