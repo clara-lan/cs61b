@@ -1,3 +1,5 @@
+import java.util.PriorityQueue;
+
 public class RabinKarpAlgorithm {
 
 
@@ -6,6 +8,11 @@ public class RabinKarpAlgorithm {
      * This method will return -1 if no matching substring is found, or if the input is invalid.
      */
     public static int rabinKarp(String input, String pattern) {
+        if(input == null){
+            return -1 ;
+        }
+
+
         return -1;
     }
 

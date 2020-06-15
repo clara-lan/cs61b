@@ -1,3 +1,5 @@
+import java.util.PriorityQueue;
+
 /**
  * Represents a flight in the Flight problem.
  */
